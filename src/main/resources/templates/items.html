@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th = "http://thymeleaf.org"
+      xmlns:layout = "http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate = "layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Accueil</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="container-fluid">
+            <ul class="nav nav-pills">
+                <li th:each="hero, status : ${heroList}" th:class="${idHero == hero.id} ? 'active' : ''">
+                    <a th:text="${hero.name}" th:href="@{/category(idHero=${hero.id})}"></a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="container col-md-6 marge">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Liste des items</div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tr>
+                            <th>Id</th> <th>Name</th> <th>BuffAttack</th> <th>BuffDefense</th> <th>Rarity</th> <th>Hero</th>
+                        </tr>
+                        <tr th:each="i:${itemList}">
+                            <td th:text="${i.id}"></td>
+                            <td th:text="${i.name}"></td>
+                            <td th:text="${i.buffAttack}"></td>
+                            <td th:text="${i.buffDefense}"></td>
+                            <td th:text="${i.rarity}"></td>
+                            <td th:text="${i.hero != null ? i.hero.name : 'Aucun'}"></td>
+                        </tr>
+                    </table>
+                    <ul class = "nav nav-pills">
+                        <li th:class="${currentPage==status.index}?'active':''"  th:each="page,status:${pages}">
+                            <a th:href="@{/index(page=${status.index}, idHero=${idHero}) }" th:text="${status.index}"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
